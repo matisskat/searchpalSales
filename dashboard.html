@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tool Directory - Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .dashboard-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 2rem;
+        }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .tool-list {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .tool-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .tool-item:last-child {
+            border-bottom: none;
+        }
+
+        .tool-info {
+            flex: 1;
+        }
+
+        .tool-info h3 {
+            margin: 0 0 0.5rem 0;
+            color: var(--text-color);
+        }
+
+        .tool-info p {
+            color: #666;
+            margin: 0;
+        }
+
+        .tool-status {
+            display: inline-block;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.875rem;
+            margin-right: 1rem;
+        }
+
+        .status-draft {
+            background-color: #ffeb3b;
+            color: #333;
+        }
+
+        .status-pending {
+            background-color: #ff9800;
+            color: white;
+        }
+
+        .status-active {
+            background-color: #4caf50;
+            color: white;
+        }
+
+        .tool-actions {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .tab-buttons {
+            margin-bottom: 2rem;
+        }
+
+        .tab-btn {
+            padding: 0.5rem 1rem;
+            margin-right: 0.5rem;
+            border: none;
+            background: none;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+        }
+
+        .tab-btn.active {
+            border-bottom-color: var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            background: white;
+            border-radius: 8px;
+            margin-top: 2rem;
+        }
+
+        .btn-edit {
+            background-color: #f0f0f0;
+            color: var(--text-color);
+        }
+
+        .btn-publish {
+            background-color: #ff9800;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">ToolDirectory</div>
+        <div class="nav-buttons">
+            <button class="btn submit-tool">Submit a Tool</button>
+            <span class="user-email">user@example.com</span>
+        </div>
+    </nav>
+
+    <div class="dashboard-container">
+        <div class="dashboard-header">
+            <h1>My Tools</h1>
+            <button class="btn btn-primary" onclick="window.location.href='index.html'">+ New Tool</button>
+        </div>
+
+        <div class="tab-buttons">
+            <button class="tab-btn active" onclick="filterTools('all')">All Tools</button>
+            <button class="tab-btn" onclick="filterTools('draft')">Drafts</button>
+            <button class="tab-btn" onclick="filterTools('pending')">Pending Review</button>
+            <button class="tab-btn" onclick="filterTools('active')">Active</button>
+        </div>
+
+        <div class="tool-list">
+            <!-- Sample Tool Item - Draft -->
+            <div class="tool-item" data-status="draft">
+                <div class="tool-info">
+                    <div class="tool-status status-draft">Draft</div>
+                    <h3>Sample Tool Name</h3>
+                    <p>This is a sample description of the tool.</p>
+                </div>
+                <div class="tool-actions">
+                    <button class="btn btn-edit" onclick="window.location.href='preview.html'">Preview & Edit</button>
+                    <button class="btn btn-publish" onclick="window.location.href='pricing.html'">Publish</button>
+                </div>
+            </div>
+
+            <!-- Sample Tool Item - Pending Review -->
+            <div class="tool-item" data-status="pending">
+                <div class="tool-info">
+                    <div class="tool-status status-pending">Pending Review</div>
+                    <h3>Another Tool</h3>
+                    <p>Waiting for review approval.</p>
+                </div>
+                <div class="tool-actions">
+                    <button class="btn btn-edit" onclick="window.location.href='preview.html'">View</button>
+                </div>
+            </div>
+
+            <!-- Sample Tool Item - Active -->
+            <div class="tool-item" data-status="active">
+                <div class="tool-info">
+                    <div class="tool-status status-active">Active</div>
+                    <h3>Published Tool</h3>
+                    <p>This tool is live and visible to all users.</p>
+                </div>
+                <div class="tool-actions">
+                    <button class="btn btn-edit">Edit</button>
+                    <button class="btn">View Stats</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function filterTools(status) {
+            // Update active tab
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            // Filter tools
+            const tools = document.querySelectorAll('.tool-item');
+            tools.forEach(tool => {
+                if (status === 'all' || tool.dataset.status === status) {
+                    tool.style.display = 'flex';
+                } else {
+                    tool.style.display = 'none';
+                }
+            });
+        }
+    </script>
+</body>
+</html> 
